@@ -222,3 +222,25 @@ You can add more `--local-user` to sign it with multiple users.
 
 With the other persons public key signed by you, you can now directly encrypt
 without being prompted with the warning.
+
+### Sending my public key to others
+
+Well all gpg related stuff are usually under your `~/.gnupg` directory.
+
+But we almost never want to mess with it directlly (and remember to back it up).
+
+To provide others your public key export it with:
+
+```
+gpg --output my_public_key_filename.gpg --export USER_EMAIL
+```
+
+This will create a binary key file, if you want something more "copy/paste/view"
+like, we can armor our key in ASCII with:
+
+```
+gpg --armor --export USER_EMAIL
+```
+
+And now you can copy/paste it in your own web site and even use it as part of
+your e-mail signature.
