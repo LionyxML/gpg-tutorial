@@ -1,4 +1,4 @@
-# GPG - Tutorial
+# GPG - Tutorial [Under Development]
 
 ### Official Docs
 
@@ -62,3 +62,65 @@ distinct pairs for:
 - Access to your crytpo wallet
 
 And so on...
+
+### Generating a key pair
+
+Several generators are provided, explore it with:
+
+```
+gpg --help | grep genera
+```
+
+The recommended way is to:
+
+```
+gpg --full-generate-key
+```
+
+Follow the instructions and voilà.
+
+### Encrypting and decrypting
+
+Remember, to encrypt you are always usig a public key, to list all available public keys in your system use
+
+```
+gpg -k
+```
+
+or
+
+```
+gpg --list-keys
+```
+
+or
+
+```
+gpg fingerprint
+```
+
+Let's encrypt a message to ourself using the key generated on our last step.
+
+Create a file FILENAME with some text inside it.
+
+Issue:
+
+`gpg --recipient RECIPIENT_EMAIL --encrypt FILENAME`
+
+Your encrypted file will be stored as FILENAME.gpg.
+
+Remember, only the person with the PRIVATE key can decrypt it.
+
+You can now delete your original message.
+
+Try to open FILENAME.gpg and you will only see `garbage` as our encrypted file.
+
+Now to decrypt your message:
+
+`gpg --decrypt --output FILENAME FILENAME.gpg`
+
+You have to provide the FILENAME to your output or it will be printed to standard
+output (aka your terminal).
+
+Tada! As you own the FILENAME.gpg private signature in your GPG "keychain", gpg
+will automatically use it to decrypt.
