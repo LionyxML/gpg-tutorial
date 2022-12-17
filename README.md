@@ -124,3 +124,101 @@ output (aka your terminal).
 
 Tada! As you own the FILENAME.gpg private signature in your GPG "keychain", gpg
 will automatically use it to decrypt.
+
+### Encrypting messages to OTHERS
+
+Well, you can only encrypt messages to others having their PUBLIC key imported
+to our GPG Keychain.
+
+The person provides you with their `PUBLICKEY.key.gpg`.
+
+First, we need to import it to your Keychain with:
+
+```
+gpg --import PUBLICKEY.key.gpg
+```
+
+You can see it now with `gpg -k`.
+
+Now we encrypt our FILE to the other person with:
+
+```
+gpg --recipient NEW_PERSON_EMAIL --encrypt FILE
+```
+
+GPG may now complain that it is not sure the person is who you think it is.
+
+Let's just ignore this for a while and proceed with 'y'.
+
+There you have it, your FILE.gpg.
+
+Well... let's try to decrypt it :)
+
+```
+gpg --decrypt --output FILE FILE.gpg
+```
+
+It will fail! Why? Well, you do not own the private key to that encrypted file.
+
+So please, always remember that messages to others will be forever in "others
+hand". If you delete your original file. Well well..
+
+### Assigning others public keys
+
+Remember I said not to worry and just say "y" to not being able to verify the
+other person public key?
+
+Now, let's worry.
+
+I can `gpg -k` on my computer. And get in touch, let's say, by phone, or running
+into the other person cubicle and ask him/her:
+"This is your imported key here I my keychain, this number is above your name".
+
+Him/her can run `gpg-k` on their machine and confirm it to you!
+
+Of course it is just an example of how to do it. But sometimes you simple have
+to "trust" the source of that public key. This is the reason why people often
+publish it in their OWN websites, to provide credibility.
+
+Well. So the public keyfile IS from that person for sure. It will be a pain in
+the \*\*\* keep track of who you trust and who you doesn't.
+
+For that, we may certify the key for gpg:
+
+```
+gpg --sign-key OTHER_PERSON_EMAIL
+```
+
+Well it will try do sign it with your own key. But you may have another key and
+wanted to sign with that one... actually sign-key is part of the `--edit-key`.
+
+You could also:
+
+```
+gpg --edit-key OTHER_PERSON_EMAIL
+```
+
+It is an interactive program... you could issue:
+
+```
+fpr
+```
+
+To get the fingerprint anc check if this is true to your recipient, and:
+
+```
+sign
+check
+save
+```
+
+Remember you use your PRIVATE key to sign.
+
+If you have several, you can choose the one you're using to sign with:
+
+`gpg --local-user YOUR_OTHER_EMAIL --sign file`
+
+You can add more `--local-user` to sign it with multiple users.
+
+With the other persons public key signed by you, you can now directly encrypt
+without being prompted with the warning.
