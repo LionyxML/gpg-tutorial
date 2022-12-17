@@ -244,3 +244,8 @@ gpg --armor --export USER_EMAIL
 
 And now you can copy/paste it in your own web site and even use it as part of
 your e-mail signature.
+
+### Frontends
+
+Lots of frontends provide "user friendly" interfaces to gpg. You can try:
+https://www.gpgfrontend.pub/
